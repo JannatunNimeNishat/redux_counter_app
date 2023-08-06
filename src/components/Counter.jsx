@@ -1,44 +1,49 @@
-import Button from "./Button";
+import { connect } from "react-redux";
+import { increment, decrement } from "../redux/counter/actions";
 import Count from "./Count";
 
 
-const Counter = ({ id, increment, decrement, count }) => {
-
-
-
+const Counter = ({count, increment, decrement}) => {
     return (
         <div className="p-4 h-auto flex flex-col items-center justify-center space-y-5 bg-white rounded shadow">
-            <Count count={count} />
+            {/* <Count count={count} /> */}
+            <div className="text-2xl font-semibold">{count}</div>
             <div className="flex space-x-3">
 
-                {/* increment btn */}
-                <Button
-                    handler={() => increment(id)}
-                >Increment</Button>
-
-
-                {/* decrement btn */}
-                <Button
-                    handler={() => decrement(id)}
-                >Decrement</Button>
-
-
-
-                {/* <button
+                <button
                     className="bg-indigo-400 text-white px-3 py-2 rounded shadow"
-                    onClick={() => increment(id)}
+                    
+                    onClick={increment}
                 >
                     Increment
-                </button> */}
-                {/*  <button
+                </button>
+                 <button
                     className="bg-red-400 text-white px-3 py-2 rounded shadow"
-                    onClick={()=> decrement(id)}
+                   
+                    onClick={decrement}
                 >
                     Decrement
-                </button> */}
+                </button>
             </div>
         </div>
     );
 };
 
-export default Counter;
+const mapStateToProps =(state, ownProps) =>{
+    console.log(ownProps);
+    return {
+        count: state.value,
+    }
+}
+
+const mapDispatchToProps =(dispatch) =>{
+    return {
+        increment: (value) => dispatch(increment(value)),
+        decrement: (value) => dispatch(decrement(value)),
+    }
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Counter); //connect is a higher order component. We call connect() here and then pass the argument in this case it is (counter)
+
