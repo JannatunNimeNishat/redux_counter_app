@@ -5,6 +5,8 @@ import myLogger from "./middlewares/myLogger";
 
 import logger from "redux-logger";
 
+import {composeWithDevTools} from 'redux-devtools-extension'
+
 //create our first middleware
 /* const myLogger = (store) => (next) => (action) => {
     console.log(`Action: ${JSON.stringify(action)}`);
@@ -19,7 +21,7 @@ import logger from "redux-logger";
 
 
 // const store = createStore(rootReducer, applyMiddleware(myLogger));
-const store = createStore(rootReducer, applyMiddleware(logger, myLogger));
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(logger, myLogger)));
 
 export default store;
 
